@@ -1,0 +1,29 @@
+.hero-head {
+    position: relative;
+    text-align: center;
+    margin-bottom: 2%;
+}
+
+.maze_title {
+    font-size: 400%;
+}
+.form_container {
+    display: flex;
+    justify-content: center;
+}
+
+.hero-body {
+    justify-content: center;
+}
+
+.grid_container {
+    display: grid;
+    grid-template-columns: repeat(var(--defaultColNum), auto);
+}
+
+.player {
+  background-color: red !important;
+}
+.goal {
+  background-color: green !important;
+}
