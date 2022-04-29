@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 
-
-class MazeForm extends Component {
-  constructor(props) {
+class MazeForm extends Component{
+  constructor (props) {
     super(props);
     this.state = {
       fields: {
         height: 10,
-        width: 10,
-      },
+        width: 10
+      }
     }
   }
 
@@ -19,16 +18,16 @@ class MazeForm extends Component {
   }
 
   handleButtonClick = () => {
-    const {width, height} = this.state.fields;
+    const { width, height } = this.state.fields;
     this.props.getMaze(width, height);
   }
 
-  render() {
+  render () {
     const { width, height } = this.state.fields;
     return (
       <div className="form_container">
         <div>
-        <div className="field is-horizontal"> 
+        <div className="field is-horizontal">
           <div className="field">
             <label className="label">Ancho</label>
             <div className="control">
@@ -50,12 +49,11 @@ class MazeForm extends Component {
               </button>
             </div>
           </div>
-        </div> 
+        </div>
         </div>
       </div>
     );
   }
-
 }
 
 export default MazeForm;

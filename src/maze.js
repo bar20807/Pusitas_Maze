@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import { hot } from 'react-hot-loader'
-
 import API from './api'
 import MazeBlock from './maze-block';
 import MazeForm from './maze-form'
 import './style.css'
 
-class Maze extends Component {
-
-  constructor(props) {
+class Maze extends Component{
+  constructor (props) {
     super(props);
 
     API.fetchMaze(10, 10)
@@ -17,7 +14,7 @@ class Maze extends Component {
     this.state = {
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight,
-      dir: 'up',
+      dir: 'up'
     }
   }
 
@@ -27,13 +24,13 @@ class Maze extends Component {
   }
 
   parseMaze = (maze) => {
-    let parsedMaze = [];
-
-    for (var i in maze) {
+    const parsedMaze = [];
+    let i = 0;
+    for (i in maze){
       let j = 0;
-      let row = [];
-      while (j < maze[i].length) {
-        switch (maze[i][j]) {
+      const row = [];
+      while (j < maze[i].length){
+        switch (maze[i][j]){
           case '|':
           case '+':
             row.push('1');
@@ -45,16 +42,15 @@ class Maze extends Component {
             break;
           case 'p':
             row.push('p');
-            this.setState({ player: { x: j, y: i*1}});
+            this.setState({ player: { x: j, y: i * 1 } });
             j++;
             break
           case ' ':
-            if (maze[i][j + 1] == 'g') {
+            if (maze[i][j + 1] === 'g'){
               row.push('g');
             } else {
               row.push('0');
-              if (maze[i - 1][j] != '+' || maze[i - 1][j] != '+') 
-                j++;
+              if (maze[i - 1][j] !== '+' || maze[i - 1][j] !== '+'){ j++; }
             }
             j++;
             break;
@@ -65,17 +61,17 @@ class Maze extends Component {
       }
       parsedMaze.push(row);
     }
-    document.documentElement.style.setProperty("--defaultRowNum", parsedMaze.length);
-    document.documentElement.style.setProperty("--defaultColNum", parsedMaze[i].length);
+    document.documentElement.style.setProperty('--defaultRowNum', parsedMaze.length);
+    document.documentElement.style.setProperty('--defaultColNum', parsedMaze[i].length);
     this.setState({ maze: parsedMaze })
   }
 
-  componentDidMount() {
+  componentDidMount () {
     document.addEventListener('keydown', this.keydown, false);
   }
 
   keydown = (e) => {
-    switch (e.key) {
+    switch (e.key){
       case 'w':
       case 'ArrowUp':
         this.moveTo(this.state.player.y - 1, this.state.player.x);
@@ -101,36 +97,36 @@ class Maze extends Component {
 
   moveTo = (y, x) => {
     const { maze, player } = this.state;
-    if (maze[y][x] == '0') {
+    if (maze[y][x] === '0'){
       maze[player.y][player.x] = '0';
       maze[y][x] = 'p';
 
-      this.setState({ maze: maze, player: { y: y, x: x } });
-    } else if (maze[y][x] === 'g') {
+      this.setState({ maze, player: { y, x } });
+    } else if (maze[y][x] === 'g'){
       maze[player.y][player.x] = '0';
       maze[y][x] = 'p';
 
-      this.setState({ maze: maze, player: { y: y, x: x } }, () => alert('HAS GANADO'));
+      this.setState({ maze, player: { y, x } }, () => alert('HAS GANADO'));
     }
   }
 
-  render() {
+  render () {
     const mazeBlocks = [];
     const { maze, dir } = this.state;
-    for (var i in maze) {
-      for (var j in maze[i]) {
-        switch (maze[i][j]) {
+    for (const i in maze){
+      for (const j in maze[i]){
+        switch (maze[i][j]){
           case '1':
-            mazeBlocks.push(<MazeBlock key={maze.length*i + j} type="wall"  />);
+            mazeBlocks.push(<MazeBlock key={maze.length * i + j} type="wall" />);
             break;
           case '0':
-            mazeBlocks.push(<MazeBlock key={maze.length*i + j} type="road"  />);
+            mazeBlocks.push(<MazeBlock key={maze.length * i + j} type="road" />);
             break;
           case 'p':
-            mazeBlocks.push(<MazeBlock key={maze.length*i + j} type="road" player dir={dir} />);
+            mazeBlocks.push(<MazeBlock key={maze.length * i + j} type="road" player dir={dir} />);
             break;
           case 'g':
-            mazeBlocks.push(<MazeBlock key={maze.length*i + j} type="road" goal />);
+            mazeBlocks.push(<MazeBlock key={maze.length * i + j} type="road" goal />);
             break;
         }
       }
